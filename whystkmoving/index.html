@@ -15,7 +15,7 @@
         }
         .ticker { font-weight: 800; font-size: 1.2em; display: block; margin-bottom: 8px; color: #1e293b; }
         .status { color: #475569; font-size: 0.95em; }
-        .status:contains("Error:") {
+        .status-error {
             color: #b91c1c; /* Dark red */
             font-family: monospace;
             background: #fef2f2;
@@ -46,10 +46,12 @@
 
                 let html = '';
                 data.forEach(stock => {
+                    const statusClass = stock.status.includes("Error:") ? 'status-error' : 'status';
+                    
                     html += `
                         <div class="card">
                             <span class="ticker">${stock.ticker}</span>
-                            <div class="status">${stock.status}</div>
+                            <div class=${statusClass}>${stock.status}</div>
                         </div>`;
                 });
                 document.getElementById('display').innerHTML = html;
