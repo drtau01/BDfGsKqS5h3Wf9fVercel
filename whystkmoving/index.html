@@ -47,10 +47,11 @@
                 let html = '';
                 data.forEach(stock => {
                     const statusClass = stock.status.includes("Error:") ? 'status-error' : 'status';
+                    const tickerName = '<a href="https://finviz.com/quote.ashx?t=' + stock.ticker + '" target="_blank" rel="noopener noreferrer">' + stock.ticker + '</a>'
                     
                     html += `
                         <div class="card">
-                            <span class="ticker">${stock.ticker}</span>
+                            <span class="ticker">${tickerName}</span>
                             <div class=${statusClass}>${stock.status}</div>
                         </div>`;
                 });
