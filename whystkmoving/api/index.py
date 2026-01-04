@@ -3,7 +3,7 @@ from urllib.parse import urlparse, parse_qs
 import requests
 from bs4 import BeautifulSoup
 import json
-import re  # Import regex module
+import re
 
 class handler(BaseHTTPRequestHandler):
     def do_GET(self):
