@@ -1,41 +1,61 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Live Finviz Scraper</title>
+    <title>Why Is Stock Moving</title>
     <style>
-        body { font-family: sans-serif; padding: 20px; background: #f0f2f5; }
-        .card { background: white; padding: 15px; margin: 10px 0; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); display: flex; justify-content: space-between; }
-        .ticker { font-weight: bold; font-size: 1.2em; color: #1a73e8; }
-        .up { color: green; } .down { color: red; }
+        body { font-family: -apple-system, sans-serif; padding: 40px; background: #f8f9fa; line-height: 1.5; }
+        .container { max-width: 600px; margin: 0 auto; }
+        .card { 
+            background: white; 
+            padding: 20px; 
+            margin-bottom: 15px; 
+            border-radius: 12px; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05); 
+            border-left: 5px solid #2563eb;
+        }
+        .ticker { font-weight: 800; font-size: 1.2em; display: block; margin-bottom: 8px; color: #1e293b; }
+        .status { color: #475569; font-size: 0.95em; }
+        .status:contains("Error:") {
+            color: #b91c1c; /* Dark red */
+            font-family: monospace;
+            background: #fef2f2;
+            padding: 5px;
+            border-radius: 4px;
+        .error { color: #dc2626; text-align: center; font-weight: bold; }
     </style>
 </head>
 <body>
-    <h1>Portfolio Tracker</h1>
-    <div id="display">Loading tickers from URL...</div>
+    <div class="container">
+        <h1>Why Is Stock Moving</h1>
+        <div id="display">Fetching data ...</div>
+    </div>
 
     <script>
         async function loadData() {
             const params = new URLSearchParams(window.location.search);
             const tickers = params.get('tickers');
+            
             if (!tickers) {
-                document.getElementById('display').innerHTML = "Add ?tickers=AAPL,MSFT to the URL";
+                document.getElementById('display').innerHTML = '<p class="error">Error: Please add ?tickers=AAPL,TSLA to the URL</p>';
                 return;
             }
 
-            // Call your Vercel Python API
-            const response = await fetch(`/api?tickers=${tickers}`);
-            const data = await response.json();
+            try {
+                const response = await fetch(`/api?tickers=${tickers}`);
+                const data = await response.json();
 
-            let html = '';
-            data.forEach(stock => {
-                const color = stock.change.includes('-') ? 'down' : 'up';
-                html += `
-                    <div class="card">
-                        <span class="ticker">${stock.ticker}</span>
-                        <span>$${stock.price} <span class="${color}">(${stock.change})</span></span>
-                    </div>`;
-            });
-            document.getElementById('display').innerHTML = html;
+                let html = '';
+                data.forEach(stock => {
+                    html += `
+                        <div class="card">
+                            <span class="ticker">${stock.ticker}</span>
+                            <div class="status">${stock.status}</div>
+                        </div>`;
+                });
+                document.getElementById('display').innerHTML = html;
+            } catch (err) {
+                document.getElementById('display').innerHTML = '<p class="error">${err.message}</p>';
+            }
         }
         loadData();
     </script>
