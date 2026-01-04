@@ -22,17 +22,22 @@ class handler(BaseHTTPRequestHandler):
                 response = requests.get(url, headers=headers, timeout=5)
                 soup = BeautifulSoup(response.text, 'html.parser')
 
-                # Find price and change in the 'snapshot-table2'
-                price = soup.find('td', string='Price').find_next_sibling('td').text
-                change = soup.find('td', string='Change').find_next_sibling('td').text
-                
+                why_moving_text = ""
+                try:
+                    why_moving_element = soup.find(class_="js-why-stock-moving-static")
+                    why_moving_text = why_moving_element.get_text(strip=True) if why_moving_element else ""
+                except Exception as e:
+                    why_moving_text = f"Error: {str(e)}"
+
                 results.append({
-                    "ticker": ticker,
-                    "price": price,
-                    "change": change
+                    "ticker": ticker, 
+                    "status": why_moving_text
                 })
-            except Exception:
-                results.append({"ticker": ticker, "price": "Error", "change": "N/A"})
+            except Exception as e:
+                results.append({
+                    "ticker": ticker, 
+                    "status": f"Error: {str(e)}"
+                })
 
         # 2. Return JSON Response
         self.send_response(200)
