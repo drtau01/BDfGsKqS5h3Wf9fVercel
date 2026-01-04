@@ -27,14 +27,15 @@ class handler(BaseHTTPRequestHandler):
                 try:
                     why_moving_element = soup.find(class_="js-why-stock-moving-static")
                     why_moving_text = why_moving_element.get_text(strip=True) if why_moving_element else ""
-                    why_moving_text = re.sub(r".+:\d\d (AM|PM)", r"\g<0>&nbsp;&nbsp;Error", why_moving_text, 1)
+                    why_moving_text = re.sub(r".+:\d\d (AM|PM)", r"\g<0>&nbsp;&nbsp;", why_moving_text, 1)
                 except Exception as e:
                     why_moving_text = f"Error: {str(e)}"
 
-                results.append({
-                    "ticker": ticker, 
-                    "status": why_moving_text
-                })
+                if why_moving_text.strip() != "":
+                    results.append({
+                        "ticker": ticker, 
+                        "status": why_moving_text
+                    })
             except Exception as e:
                 results.append({
                     "ticker": ticker, 
