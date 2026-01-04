@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Live Finviz Scraper</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; background: #f0f2f5; }
+        .card { background: white; padding: 15px; margin: 10px 0; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); display: flex; justify-content: space-between; }
+        .ticker { font-weight: bold; font-size: 1.2em; color: #1a73e8; }
+        .up { color: green; } .down { color: red; }
+    </style>
+</head>
+<body>
+    <h1>Portfolio Tracker</h1>
+    <div id="display">Loading tickers from URL...</div>
+
+    <script>
+        async function loadData() {
+            const params = new URLSearchParams(window.location.search);
+            const tickers = params.get('tickers');
+            if (!tickers) {
+                document.getElementById('display').innerHTML = "Add ?tickers=AAPL,MSFT to the URL";
+                return;
+            }
+
+            // Call your Vercel Python API
+            const response = await fetch(`/api?tickers=${tickers}`);
+            const data = await response.json();
+
+            let html = '';
+            data.forEach(stock => {
+                const color = stock.change.includes('-') ? 'down' : 'up';
+                html += `
+                    <div class="card">
+                        <span class="ticker">${stock.ticker}</span>
+                        <span>$${stock.price} <span class="${color}">(${stock.change})</span></span>
+                    </div>`;
+            });
+            document.getElementById('display').innerHTML = html;
+        }
+        loadData();
+    </script>
+</body>
+</html>
