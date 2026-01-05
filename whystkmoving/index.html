@@ -57,6 +57,7 @@
                             <div class=${statusClass}>${stock.status}</div>
                         </div>`;
                 });
+                if (html == "") html = "No News";
                 document.getElementById('display').innerHTML = html;
             } catch (err) {
                 document.getElementById('display').innerHTML = '<p class="error">${err.message}</p>';
