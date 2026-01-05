@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Why Stock Is Moving</title>
+    <title>Why Stocks Are Moving</title>
     <style>
         h1 { font-size: x-large; }
         body { font-family: -apple-system, sans-serif; font-size: medium; padding: 30px; padding-top: 10px; background: #c3d2e0; line-height: 1.5; }
@@ -30,14 +30,20 @@
 </head>
 <body>
     <div class="container">
-        <h1>Why Stock Is Moving</h1>
+        <h1 id="head1">Why Stocks Are Moving</h1>
         <div id="display">Fetching data ...</div>
     </div>
 
     <script>
         async function loadData() {
             const params = new URLSearchParams(window.location.search);
+            const name = params.get('name');
             const tickers = params.get('tickers');
+
+            if (!name) {
+                name = "Stocks"
+            }
+            document.getElementById('head1').innerText = "Why " + name + " Are Moving"
             
             if (!tickers) {
                 document.getElementById('display').innerHTML = '<p class="error">Error: Please add ?tickers=AAPL,TSLA to the URL</p>';
