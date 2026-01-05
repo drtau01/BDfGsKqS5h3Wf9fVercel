@@ -37,13 +37,10 @@
     <script>
         async function loadData() {
             const params = new URLSearchParams(window.location.search);
-            const name = params.get('name');
+            const stocksName = params.get('name') || "Stocks";
             const tickers = params.get('tickers');
 
-            if (!name) {
-                let name = "Stocks";
-            }
-            document.getElementById('head1').innerText = "Why " + name + " Are Moving";
+            document.getElementById('head1').innerText = "Why " + stocksName + " Are Moving";
             
             if (!tickers) {
                 document.getElementById('display').innerHTML = '<p class="error">Error: Please add ?tickers=AAPL,TSLA to the URL</p>';
