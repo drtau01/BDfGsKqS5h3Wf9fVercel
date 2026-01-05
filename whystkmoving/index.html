@@ -49,7 +49,7 @@
 
                 let html = '';
                 data.forEach(stock => {
-                    const statusClass = stock.status.includes("Error:") ? 'status-error' : 'status-error';
+                    const statusClass = stock.status.includes("Error:") ? 'status-error' : 'status';
                     const tickerName = '<a href="https://finviz.com/quote.ashx?t=' + stock.ticker + '" target="_blank" rel="noopener noreferrer">' + stock.ticker + '</a>'
                     
                     html += `
