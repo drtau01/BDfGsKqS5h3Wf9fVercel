@@ -8,7 +8,11 @@
     <style>
         h1 { font-size: x-large; }
         body { font-family: 'Courier New', monospace; font-size: 16px; font-kerning: none; padding: 30px; padding-top: 10px; background: #c3d2e0; line-height: 1.5; }
-        .container { margin: auto; max-width: 40ch; }
+        .container {
+            margin: auto; 
+            width: 90%;      /* Ensures it doesn't hit the screen edges on mobile */
+            max-width: 400px; /* Provides a consistent "stop" point on desktop */
+        }
         .card { 
             background: white; 
             padding: 20px; 
