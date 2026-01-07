@@ -25,11 +25,11 @@
         .status-error {
             color: #b91c1c; /* Dark red */
             font-family: monospace;
-            font-size: small;
+            font-size: 14px;
             background: #fef2f2;
             padding: 5px;
             border-radius: 4px; }
-        .error { color: #dc2626; text-align: center; font-weight: bold; font-size: small; }
+        .error { color: #dc2626; text-align: center; font-weight: bold; font-size: 14px; }
     </style>
 </head>
 <body>
@@ -57,7 +57,7 @@
 
                 let html = '';
                 data.forEach(stock => {
-                    const statusClass = stock.status.includes("Error:") ? 'status-error' : 'status';
+                    const statusClass = stock.status.includes("Error:") ? 'status-error' : 'status-error';
                     const tickerName = '<a href="https://finviz.com/quote.ashx?t=' + stock.ticker + '" target="_blank" rel="noopener noreferrer">' + stock.ticker + '</a>'
                     
                     html += `
