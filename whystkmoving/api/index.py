@@ -28,7 +28,7 @@ class handler(BaseHTTPRequestHandler):
                     why_moving_element = soup.find(class_="js-why-stock-moving-static")
                     why_moving_text = why_moving_element.get_text(strip=True) if why_moving_element else ""
                     why_moving_text = re.sub(r".+:\d\d (AM|PM)", r"\g<0>&nbsp;&nbsp;", why_moving_text, 1)
-                    why_moving_text = re.sub(r"^May", r"<span style='color: red;'>May</span>", why_moving_text, 1)
+                    why_moving_text = re.sub(r"^Today", r"<span style='color: red;'>Today</span>", why_moving_text, 1)
                 except Exception as e:
                     why_moving_text = f"Error: {str(e)}"
 
